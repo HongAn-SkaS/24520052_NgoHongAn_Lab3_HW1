@@ -2,27 +2,30 @@
 .decibel-meter {
   display: grid;
   gap: 0.875rem;
+  min-width: 0;
   padding: 1.25rem;
-  border: 1px solid #303b50;
+  border: 1px solid var(--color-border);
   border-radius: 1rem;
-  background: #151d2c;
+  background: var(--color-surface);
 }
 
 .decibel-meter__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  min-width: 0;
 }
 
 .decibel-meter__header h2 {
   margin: 0;
-  color: #f1f5f9;
+  color: var(--color-text-primary);
   font-size: 1.125rem;
 }
 
 .decibel-meter__value {
-  color: #67e8f9;
+  color: var(--color-accent);
   font-variant-numeric: tabular-nums;
   font-weight: 700;
 }
@@ -30,6 +33,7 @@
 .decibel-meter__track {
   display: block;
   width: 100%;
+  min-width: 0;
   height: 1.25rem;
   overflow: hidden;
   border: 0;
@@ -57,6 +61,18 @@
 .decibel-meter__scale {
   display: flex;
   justify-content: space-between;
-  color: #94a3b8;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
   font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 380px) {
+  .decibel-meter {
+    padding: 1rem;
+  }
+
+  .decibel-meter__scale {
+    font-size: 0.6875rem;
+  }
 }

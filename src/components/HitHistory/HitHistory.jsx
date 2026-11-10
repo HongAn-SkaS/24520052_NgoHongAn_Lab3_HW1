@@ -21,24 +21,18 @@ export function HitHistory({ hits, announcement }) {
       </output>
 
       {hits.length === 0 ? (
-        <p className="hit-history__empty">
-          No drum hits yet. Press a pad or use your keyboard.
-        </p>
-      ) : (
-        <ol className="hit-history__list" aria-label="Recent drum hits">
-          {hits.map((hit) => (
-            <li className="hit-history__item" key={hit.id}>
-              <span className="hit-history__name">
-                {hit.padName}
-              </span>
-              <kbd>{hit.key}</kbd>
-              <time dateTime={hit.timestamp}>
-                {hit.displayTime}
-              </time>
-            </li>
-          ))}
-        </ol>
-      )}
+  <p className="hit-history__empty">No drum hits yet.</p>
+) : (
+  <ol className="hit-history__list" aria-label="Recent drum hits">
+    {hits.map((hit) => (
+      <li className="hit-history__item" key={hit.id}>
+        <span className="hit-history__name">{hit.padName}</span>
+        <kbd>{hit.key}</kbd>
+        <time dateTime={hit.timestamp}>{hit.displayTime}</time>
+      </li>
+    ))}
+  </ol>
+)}
     </section>
   );
 }
