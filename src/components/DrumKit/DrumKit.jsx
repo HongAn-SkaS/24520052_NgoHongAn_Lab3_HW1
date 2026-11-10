@@ -105,13 +105,14 @@ const triggerPad = useCallback(
         </section>
 
         <button
-          className="drum-kit__toggle"
-          type="button"
-          aria-pressed={isEnabled}
-          onClick={() => setIsEnabled((previous) => !previous)}
-        >
-          Keyboard: {isEnabled ? "On" : "Off"}
-        </button>
+  className="drum-kit__toggle"
+  type="button"
+  aria-pressed={isEnabled}
+  aria-label="Toggle drum keyboard shortcuts"
+  onClick={() => setIsEnabled((previous) => !previous)}
+>
+  Keyboard: {isEnabled ? "On" : "Off"}
+</button>
       </header>
 
       <p

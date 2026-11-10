@@ -48,6 +48,11 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
 }
+.drum-kit__toggle:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 4px;
+}
+
 
 @media (max-width: 640px) {
   .drum-kit__header {
