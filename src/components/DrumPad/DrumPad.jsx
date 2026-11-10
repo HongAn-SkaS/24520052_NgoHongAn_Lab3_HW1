@@ -10,12 +10,12 @@ export function DrumPad({
 
   return (
     <button
-      className={`drum-pad${isActive ? " drum-pad--active" : ""}`}
-      type="button"
-      aria-label={`${pad.name} drum pad, keyboard shortcut ${pad.key}`}
-      aria-pressed={isActive}
-      onClick={handleClick}
-    >
+  type="button"
+  className={`drum-pad${isActive ? " drum-pad--active" : ""}`}
+  aria-label={`${pad.name} drum pad, keyboard shortcut ${pad.key}`}
+  aria-pressed={isActive}
+  onClick={handleClick}
+>
       <span className="drum-pad__key" aria-hidden="true">
         {pad.key}
       </span>

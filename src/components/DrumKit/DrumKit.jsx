@@ -7,17 +7,22 @@ import { DrumPad } from "../DrumPad/DrumPad";
 
 import "./DrumKit.css";
 import { useAudioEngine } from "../../hooks/useAudioEngine";
-
+import { DecibelMeter } from "../DecibelMeter/DecibelMeter";
 import { HitHistory } from "../HitHistory/HitHistory";
 
 
 export function DrumKit() {
+  const releasePad = useCallback(() => {
+  window.clearTimeout(activeTimerRef.current);
+  activeTimerRef.current = null;
+  setActivePadId(null);
+}, []);
   const [hitHistory, setHitHistory] = useState([]);
 const [latestAnnouncement, setLatestAnnouncement] = useState("");
 
-const hitIdRef = useRef(0);
-  const {
+const {
   playSound,
+  analyserRef,
   isAudioReady,
 } = useAudioEngine();
 
@@ -76,7 +81,12 @@ const triggerPad = useCallback(
 
 
   // Register physical keyboard shortcuts.
-  useDrumKeyboard(DRUM_PAD_MAP, triggerPad, isEnabled);
+  useDrumKeyboard(
+  DRUM_PAD_MAP,
+  triggerPad,
+  isEnabled,
+  releasePad
+);
 
   // Clean up the active-state timer on unmount.
   useEffect(() => {
@@ -118,6 +128,7 @@ const triggerPad = useCallback(
         aria-label="Drum pads"
        
       >
+  
         {DRUM_PADS.map((pad) => (
           <DrumPad
             key={pad.id}
@@ -126,11 +137,17 @@ const triggerPad = useCallback(
             onTrigger={triggerPad}
           />
         ))}
+        
+
+      </section>
+      <DecibelMeter
+      analyserRef={analyserRef}
+      isAudioReady={isAudioReady}
+    />
         <HitHistory
   hits={hitHistory}
   announcement={latestAnnouncement}
 />
-      </section>
     </section>
   );
 }

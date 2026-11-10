@@ -21,7 +21,7 @@ function isTypingTarget(target) {
   }
 
   return Boolean(
-    target.closest('[contenteditable="true"], [role="textbox"]'),
+    target.closest('[contenteditable="true"], [role="textbox"]')
   );
 }
 
@@ -29,6 +29,7 @@ export function useDrumKeyboard(
   padMap,
   onTriggerPad,
   isEnabled = true,
+  onReleasePad
 ) {
   useEffect(() => {
     if (!isEnabled) {
@@ -36,22 +37,14 @@ export function useDrumKeyboard(
     }
 
     const handleKeyDown = (event) => {
-      // Prevent operating-system key-hold repetition.
-      if (event.repeat) {
+      if (event.repeat || event.isComposing) {
         return;
       }
 
-      // Ignore keyboard shortcuts during IME composition.
-      if (event.isComposing) {
-        return;
-      }
-
-      // Isolate shortcuts from editable elements.
       if (isTypingTarget(event.target)) {
         return;
       }
 
-      // Identify physical keyboard keys.
       const pad = padMap.get(event.code);
 
       if (!pad) {
@@ -62,10 +55,27 @@ export function useDrumKeyboard(
       onTriggerPad(pad.id);
     };
 
+    const handleKeyUp = (event) => {
+      if (isTypingTarget(event.target)) {
+        return;
+      }
+
+      const pad = padMap.get(event.code);
+
+      if (!pad) {
+        return;
+      }
+
+      event.preventDefault();
+      onReleasePad?.(pad.id);
+    };
+
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [padMap, onTriggerPad, isEnabled]);
+  }, [padMap, onTriggerPad, onReleasePad, isEnabled]);
 }
