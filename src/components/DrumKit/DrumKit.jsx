@@ -20,6 +20,8 @@ export function DrumKit() {
   const [hitHistory, setHitHistory] = useState([]);
 const [latestAnnouncement, setLatestAnnouncement] = useState("");
 
+const hitIdRef = useRef(0);
+
 const {
   playSound,
   analyserRef,
@@ -141,6 +143,7 @@ const triggerPad = useCallback(
         
 
       </section>
+
       <DecibelMeter
       analyserRef={analyserRef}
       isAudioReady={isAudioReady}
