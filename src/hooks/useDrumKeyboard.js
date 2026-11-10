@@ -7,6 +7,24 @@ const IGNORED_TAGS = new Set([
   "SELECT",
 ]);
 
+function isTypingTarget(target) {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+
+  if (IGNORED_TAGS.has(target.tagName)) {
+    return true;
+  }
+
+  if (target.isContentEditable) {
+    return true;
+  }
+
+  return Boolean(
+    target.closest('[contenteditable="true"], [role="textbox"]'),
+  );
+}
+
 export function useDrumKeyboard(
   padMap,
   onTriggerPad,
@@ -23,12 +41,17 @@ export function useDrumKeyboard(
         return;
       }
 
-      // Ignore shortcuts while interacting with form controls.
-      if (IGNORED_TAGS.has(event.target.tagName)) {
+      // Ignore keyboard shortcuts during IME composition.
+      if (event.isComposing) {
         return;
       }
 
-      // Use physical keyboard codes, never event.key or keyCode.
+      // Isolate shortcuts from editable elements.
+      if (isTypingTarget(event.target)) {
+        return;
+      }
+
+      // Identify physical keyboard keys.
       const pad = padMap.get(event.code);
 
       if (!pad) {
