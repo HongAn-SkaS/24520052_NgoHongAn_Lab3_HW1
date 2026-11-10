@@ -1,7 +1,8 @@
 
 .drum-kit {
-  width: min(100%, 960px);
-  margin-inline: auto;
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .drum-kit__header {
@@ -9,18 +10,15 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 2rem;
 }
 
 .drum-kit__header h2 {
   margin: 0;
-  color: #f8fafc;
-  font-size: 1.75rem;
 }
 
 .drum-kit__header p {
-  margin-block: 0.5rem 0;
-  color: #94a3b8;
+  margin: 0.5rem 0 0;
+  color: var(--color-text-secondary);
 }
 
 .drum-kit__toggle {
@@ -54,13 +52,26 @@
 }
 
 
+@media (max-width: 900px) {
+  .drum-kit__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 640px) {
+  .drum-kit__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
   .drum-kit__header {
     align-items: flex-start;
     flex-direction: column;
   }
 
   .drum-kit__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
   }
 }

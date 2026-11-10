@@ -78,3 +78,57 @@
     transform: none;
   }
 }
+
+
+.drum-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  min-width: 0;
+  min-height: 150px;
+  padding: 1rem;
+
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.drum-pad__key {
+  display: grid;
+  place-items: center;
+
+  width: 2.5rem;
+  height: 2.5rem;
+
+  border: 1px solid var(--color-border);
+  border-radius: 0.625rem;
+
+  font-weight: 700;
+}
+
+.drum-pad__name {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.drum-pad__description {
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 480px) {
+  .drum-pad {
+    min-height: 120px;
+    padding: 0.75rem;
+  }
+
+  .drum-pad__name {
+    font-size: 1rem;
+  }
+
+  .drum-pad__description {
+    font-size: 0.75rem;
+  }
+}

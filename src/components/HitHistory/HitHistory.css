@@ -95,3 +95,27 @@
     font-size: 0.75rem;
   }
 }
+
+
+.hit-history {
+  min-width: 0;
+}
+
+.hit-history__item {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  .hit-history {
+    padding: 1rem;
+  }
+
+  .hit-history__item {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .hit-history__item time {
+    grid-column: 1 / -1;
+  }
+}
