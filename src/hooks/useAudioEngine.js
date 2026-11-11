@@ -238,27 +238,34 @@ export function useAudioEngine() {
     return audioContext;
   }, []);
 
-  const playSound = useCallback(async (sound) => {
-    try {
-      const audioContext = initializeAudio();
+  
+const playSound = useCallback(async (sound) => {
+  try {
+    const audioContext = initializeAudio();
 
-      if (audioContext.state === "suspended") {
-        await audioContext.resume();
-      }
-
-      if (audioContext.state !== "running") {
-        return;
-      }
-
-      playDrumSound(
-        audioContext,
-        masterGainRef.current,
-        sound,
-      );
-    } catch (error) {
-      console.error("Audio playback failed:", error);
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
     }
-  }, [initializeAudio]);
+
+    const isRunning = audioContext.state === "running";
+
+    setIsAudioReady(isRunning);
+
+    if (!isRunning) {
+      return;
+    }
+
+    playDrumSound(
+      audioContext,
+      masterGainRef.current,
+      sound
+    );
+  } catch (error) {
+    setIsAudioReady(false);
+    console.error("Audio playback failed:", error);
+  }
+}, [initializeAudio]);
+
 
   useEffect(() => {
     return () => {
